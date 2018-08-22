@@ -1,0 +1,32 @@
+{
+  "name": "nodeapp",
+  "version": "4.0.1",
+  "description": "this is test",
+  "main": "app.js",
+  "dependencies": {
+    "npm": "^4.2.0"
+  },
+  "devDependencies": {
+   "body-parser": "1.15.0",
+    "cors": "2.7.1",
+    "ejs": "2.4.1",
+    "errorhandler": "1.4.3",
+    "express": "4.13.4",
+    "mysql":"2.13.0",
+    "http":"0.0.0",
+    "path":"0.12.7",
+    "request-ip":"2.0.2"
+    },
+  "scripts": {
+    "test": "start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "start"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "abrar and tahrin",
+  "license": "ISC"
+}

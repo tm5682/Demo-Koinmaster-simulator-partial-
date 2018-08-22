@@ -1,0 +1,32 @@
+var express = require('express');
+var http = require('http');
+var bodyParser=require('body-parser');
+var path = require('path');
+var url =require('url');
+var app = express();
+app.set('port', process.env.PORT || 4500);
+app.set('views', path.join(__dirname, './views'));
+app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, 'public')));
+var authenticateController=require('./controllers/authenticate');
+var registerController=require('./controllers/register');
+var user_info =require('./controllers/user_info');
+var buy_coin =require('./controllers/buy_coin');
+var sell_coin =require('./controllers/sell_coin');
+var coin_ticker =require('./controllers/get_coins');
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.get('/', function(req, res){
+	res.render('main');
+});
+app.get('/sim-app', user_info.userinfo);
+app.get('/api/ticker', coin_ticker.get_ticker);
+app.post('/api/register',registerController.register);
+app.post('/buy_coin',buy_coin.buy_coin);
+app.post('/compare',buy_coin.compare);
+app.post('/sell_coin',buy_coin.buy_coin);
+app.post('/signin',authenticateController.authenticate);
+http.createServer(app).listen(app.get('port'), function(){
+    console.log(' server listening on port ' + app.get('port'));
+    console.log(' Please refresh the browser or /n enter http://localhost:4300/ into your browser ');
+});

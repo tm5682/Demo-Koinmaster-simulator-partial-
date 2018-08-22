@@ -1,0 +1,20 @@
+{
+  "name": "bower",
+  "description": "this is test",
+  "main": "app.js",
+  "authors": [
+    "chao"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "node"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
