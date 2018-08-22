@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<style>body{padding-top: 80px;}</style>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/toastr.min.css">
+    <!--<link href="customer/css/bootstrap.min.css" rel="stylesheet" />-->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+<body ng-app="sim-app">
+    <header id="fh5co-header" role="banner">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div id="fh5co-navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/"><span>Logout &nbsp;<span class="border"></span></span></a></li>
+						<li><a href="" data-toggle="modal" onclick=" showLoginForm();" data-target="#loginModal"><span>Hi,<%=userdata[0].username%><span style="display:none" id ="userid"><%=userdata[0].userid%></span></span></a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+    <div class="container"ng-controller="buyandsell"  >
+        <div class="row" >
+            <div>
+                <tr>
+                <td>CHOOSE CURRENCY:</td>
+                <td>
+                    <select class="coin" id="sell_currency" >
+                        <option value="1"  >USD</option>
+                        <option value ="2">BTC</option>
+                    </select>
+                </td>
+            </tr>
+            </div>
+        </div>    
+        <div class="row text-center">
+            <div class="col-lg-12 ">
+                <h4 class="col-md-12 alert alert-default"><i class="fa fa-cogs">&nbsp;&nbsp;</i>RESOURCES</h4>
+                <table class="table table-striped table-bordered table-hover dataTables-example" >
+                    <thead>
+                    <tr>
+                        <th><i class="fa fa-star"></i></th>
+                        <th>MARKET</th>
+                        <th>LastPrice_USD</th>
+                        <th>LastPrice_BTC</th>
+                        <th>24 HRS VOLUME</th>
+                        <th>ASK</th>
+                        <th>BID</th>
+                        <th>LAST PRICE</th>
+                    </tr>
+                    </thead>
+                    <tbody style="text-align:left"  >
+                        <tr ng-model="coin"ng-repeat="coin in coins" ng-change="change_color(this)">
+                            <td><i class="fa fa-star"></i></td>
+                            <td>{{coin.coins}}</td>
+                            <td>{{coin.info.lastpriceUSD}}</td>
+                            <td>{{coin.info.lastpriceBTC}}</td>
+                            <td>{{coin.info.ask}}</td>
+                            <td>{{coin.info.bid}}</td>
+                            <td>{{coin.info.last_price}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 ">
+                <tr>
+                    <td>Available USD:<%=userdata[0].Rem_virtual_usd%></td>
+                </tr>
+            </div>
+              <div class="col-lg-3 ">
+                <tr>
+                    <td style="font-weight:700">Available BTC:<%=userdata[0].Rem_virtual_usd/5000%></td>
+                </tr>
+            </div>
+        </div>
+         <div class="row text-center">
+            <div class="col-lg-12">
+                <h4 class="col-md-12 alert alert-default"><i class="fa fa-credit-card">&nbsp;&nbsp;</i>ACTION CENTER</h4>
+                <div class="col-lg-6 col-md-8" >
+                        <table class="table table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                            <tr style="text-align:center">
+                                <th><i class="fa fa-btc">&nbsp;</i> BUY CENTER</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Choose Coin</td>
+                                    <td>
+                                        <select class="coin" id="coin" >
+                                            <option value="1">XRP</option>
+                                            <option value ="2">LTC</option>
+                                            <option value ="3">BTC</option>
+                                            <option value ="4">ETC</option>
+                                            <option value ="5">MON</option>
+                                            <option value ="3">ZTC</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Choose Currency</td>
+                                    <td>
+                                        <select class="coin" id="currency">
+                                            <option value="1">USD</option>
+                                            <option value ="2">BTC</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Quantity to Buy</td>
+                                    <td><input type="number" id="qua"class="coin"></td>
+                                </tr>
+                                <tr>
+                                    <td>Total Currency Amount</td>
+                                    <td><input type="number"id ="amout_buy" class="coin"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><a href=""ng-click="buy_direct()"id="direct" ><span>Direct Buy <span class="border"></span>/</span></a><a href="" ng-click="buy_request()" id="request" ><span>Pull Buy Request <span class="border"></span></span></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
+                <div class="col-lg-6 col-md-8 " >
+                    <table class="table table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                            <tr style="text-align:center">
+                                <th><i class="fa  fa-usd">&nbsp;</i> SELL CENTER</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                 <tr>
+                                    <td>Choose Coin</td>
+                                    <td> 
+                                        <select class="coin" id="sell_coin">
+                                           <option value="1">XRP</option>
+                                            <option value ="2">LTC</option>
+                                            <option value ="3">BTC</option>
+                                            <option value ="4">ETC</option>
+                                            <option value ="5">MON</option>
+                                            <option value ="3">ZTC</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Choose Currency</td>
+                                    <td>
+                                        <select class="coin" id="currency_sell">
+                                            <option value="1">USD</option>
+                                            <option value ="2">BTC</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Quantity to Buy</td>
+                                    <td><input type="number" id="sel_qua"class="coin"></td>
+                                </tr>
+                                <tr>
+                                    <td>Total Currency Amount</td>
+                                    <td><input type="number"id ="sell_amount" class="coin"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><a href="" ng-click="sell_direct()"id="direct" ><span>Direct Sell <span class="border"></span>/</span></a><a href="" ng-click="sell_request();" id="request" ><span>Pull Sell Request <span class="border"></span></span></a></td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <h4 class="col-md-12 alert alert-default"><i class="fa  fa-bar-chart">&nbsp;&nbsp;</i>ASK AND BID INFO</h4>
+                <div class="col-lg-5 col-md-6" >
+                    <h4 class=" alert alert-default">ASK CHART</h4>
+                        <canvas id="askChart" ></canvas>    
+                </div>
+                <div class="col-lg-5 col-lg-offset-1 col-md-6">
+                    <h4 class=" alert alert-default">BID CHART</h4>
+                       <canvas id="bidChart" ></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-lg-12" >
+                <h4 class="col-md-12 alert alert-default"><i class="fa  fa-users">&nbsp;&nbsp;</i>MY PORTFOLIO</h4>
+                <table class="table table-striped table-bordered table-hover dataTables-example" >
+                    <thead>
+                    <tr>
+                        <th>ASSERTS/COINS</th>
+                        <th>QUANTITY</th>
+                        <th>TOTAL USD</th>
+                        <th>TOTAL BTC</th>
+                        <th>NET PROFIT/LOSS IN USD</th>
+                        <th>NET PROFIT/LOSS IN BTC</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row text-center">
+           <canvas id="myChart" width="660" height="500"></canvas>
+        </div>
+    </div>
+</body>
+    <script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Owl carousel -->
+	<script src="js/owl.carousel.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<!-- Main JS -->
+    <script src="js/Candlestick.js"></script>
+    <script src="js/angular.min.js"></script>
+	<script src="js/sim_app.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <script src="js/chart.js"></script>
+</html>
